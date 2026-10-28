@@ -1,0 +1,63 @@
+{
+  "seed": 42,
+  "validation_fraction": 0.2,
+  "split_method": "StratifiedGroupKFold(n_splits=5, shuffle=True), first fold held out",
+  "tfidf": {
+    "ngram_range": [
+      1,
+      2
+    ],
+    "min_df": 6,
+    "max_df": 0.95,
+    "max_features": 50000,
+    "sublinear_tf": true,
+    "lowercase": true,
+    "strip_accents": null,
+    "stop_words": null,
+    "token_pattern": "(?u)\\b\\w[\\w\\-/+]*\\b",
+    "dtype": "float32"
+  },
+  "structured_numeric_features": [
+    "smiles_length_a",
+    "text_chars_a",
+    "text_fields_present_a",
+    "smiles_length_b",
+    "text_chars_b",
+    "text_fields_present_b",
+    "same_smiles",
+    "missing_Indication_A",
+    "missing_Indication_B",
+    "missing_Warning_A",
+    "missing_Warning_B",
+    "missing_CYP450_Enzymes_A",
+    "missing_CYP450_Enzymes_B"
+  ],
+  "fingerprints": {
+    "created": true,
+    "bits_per_drug": 2048,
+    "unparsable_smiles": 0
+  },
+  "text_cleaning": "html tags removed, entities decoded, reference markers such as [A123] removed, whitespace collapsed, case and punctuation kept",
+  "row_counts": {
+    "train": 15284,
+    "test": 3974
+  },
+  "library_versions": {
+    "scikit_learn": "1.6.1",
+    "pandas": "2.2.3",
+    "numpy": "2.1.3"
+  },
+  "artifacts": {
+    "tfidf_vectorizer": "models/tfidf_vectorizer.joblib",
+    "structured_preprocessor": "models/structured_preprocessor.joblib",
+    "tfidf_train": "features/X_tfidf_train.npz",
+    "tfidf_test": "features/X_tfidf_test.npz",
+    "structured_train": "features/X_structured_train.npz",
+    "structured_test": "features/X_structured_test.npz",
+    "fingerprint_train": "features/X_fingerprint_train.npz",
+    "fingerprint_test": "features/X_fingerprint_test.npz",
+    "drug_catalog": "processed/drug_catalog.csv",
+    "train_indices": "splits/train_indices.npy",
+    "validation_indices": "splits/validation_indices.npy"
+  }
+}

@@ -1,0 +1,430 @@
+{
+  "pair_input_fields": [
+    {
+      "name": "SMILES_A",
+      "kind": "smiles",
+      "drug": "A",
+      "nullable": false
+    },
+    {
+      "name": "SMILES_B",
+      "kind": "smiles",
+      "drug": "B",
+      "nullable": false
+    },
+    {
+      "name": "Mechanism_A",
+      "kind": "text",
+      "drug": "A",
+      "nullable": false
+    },
+    {
+      "name": "Mechanism_B",
+      "kind": "text",
+      "drug": "B",
+      "nullable": false
+    },
+    {
+      "name": "Metabolism_A",
+      "kind": "text",
+      "drug": "A",
+      "nullable": false
+    },
+    {
+      "name": "Metabolism_B",
+      "kind": "text",
+      "drug": "B",
+      "nullable": false
+    },
+    {
+      "name": "Pharmacodynamics_A",
+      "kind": "text",
+      "drug": "A",
+      "nullable": false
+    },
+    {
+      "name": "Pharmacodynamics_B",
+      "kind": "text",
+      "drug": "B",
+      "nullable": false
+    },
+    {
+      "name": "Absorption_A",
+      "kind": "text",
+      "drug": "A",
+      "nullable": false
+    },
+    {
+      "name": "Absorption_B",
+      "kind": "text",
+      "drug": "B",
+      "nullable": false
+    },
+    {
+      "name": "Half_Life_A",
+      "kind": "text",
+      "drug": "A",
+      "nullable": false
+    },
+    {
+      "name": "Half_Life_B",
+      "kind": "text",
+      "drug": "B",
+      "nullable": false
+    },
+    {
+      "name": "Protein_Binding_A",
+      "kind": "text",
+      "drug": "A",
+      "nullable": false
+    },
+    {
+      "name": "Protein_Binding_B",
+      "kind": "text",
+      "drug": "B",
+      "nullable": false
+    },
+    {
+      "name": "Elimination_Route_A",
+      "kind": "text",
+      "drug": "A",
+      "nullable": false
+    },
+    {
+      "name": "Elimination_Route_B",
+      "kind": "text",
+      "drug": "B",
+      "nullable": false
+    },
+    {
+      "name": "Indication_A",
+      "kind": "text",
+      "drug": "A",
+      "nullable": true
+    },
+    {
+      "name": "Indication_B",
+      "kind": "text",
+      "drug": "B",
+      "nullable": true
+    },
+    {
+      "name": "Warning_A",
+      "kind": "text",
+      "drug": "A",
+      "nullable": true
+    },
+    {
+      "name": "Warning_B",
+      "kind": "text",
+      "drug": "B",
+      "nullable": true
+    },
+    {
+      "name": "Toxicity_A",
+      "kind": "text",
+      "drug": "A",
+      "nullable": false
+    },
+    {
+      "name": "Toxicity_B",
+      "kind": "text",
+      "drug": "B",
+      "nullable": false
+    },
+    {
+      "name": "CYP450_Enzymes_A",
+      "kind": "category_list",
+      "drug": "A",
+      "nullable": true
+    },
+    {
+      "name": "CYP450_Enzymes_B",
+      "kind": "category_list",
+      "drug": "B",
+      "nullable": true
+    }
+  ],
+  "drug_catalog": "processed/drug_catalog.csv",
+  "text_input_column": "combined_text",
+  "artifacts": {
+    "tfidf_vectorizer": "models/tfidf_vectorizer.joblib",
+    "structured_preprocessor": "models/structured_preprocessor.joblib",
+    "tfidf_train": "features/X_tfidf_train.npz",
+    "tfidf_test": "features/X_tfidf_test.npz",
+    "structured_train": "features/X_structured_train.npz",
+    "structured_test": "features/X_structured_test.npz",
+    "fingerprint_train": "features/X_fingerprint_train.npz",
+    "fingerprint_test": "features/X_fingerprint_test.npz",
+    "drug_catalog": "processed/drug_catalog.csv",
+    "train_indices": "splits/train_indices.npy",
+    "validation_indices": "splits/validation_indices.npy"
+  },
+  "outputs": {
+    "severity": {
+      "classes": [
+        "Minor",
+        "Moderate",
+        "Major"
+      ]
+    },
+    "adverse_events": [
+      {
+        "display_name": "Abdominal pain",
+        "binary_column": "Target_Binary_Abdominal_pain",
+        "prr_column": "Target_PRR_Abdominal_pain"
+      },
+      {
+        "display_name": "Anaemia",
+        "binary_column": "Target_Binary_Anaemia",
+        "prr_column": "Target_PRR_Anaemia"
+      },
+      {
+        "display_name": "Anxiety",
+        "binary_column": "Target_Binary_Anxiety",
+        "prr_column": "Target_PRR_Anxiety"
+      },
+      {
+        "display_name": "Arthralgia",
+        "binary_column": "Target_Binary_Arthralgia",
+        "prr_column": "Target_PRR_Arthralgia"
+      },
+      {
+        "display_name": "Asthenia",
+        "binary_column": "Target_Binary_Asthenia",
+        "prr_column": "Target_PRR_Asthenia"
+      },
+      {
+        "display_name": "Atrial fibrillation",
+        "binary_column": "Target_Binary_Atrial_fibrillation",
+        "prr_column": "Target_PRR_Atrial_fibrillation"
+      },
+      {
+        "display_name": "Back pain",
+        "binary_column": "Target_Binary_Back_pain",
+        "prr_column": "Target_PRR_Back_pain"
+      },
+      {
+        "display_name": "Chest pain",
+        "binary_column": "Target_Binary_Chest_pain",
+        "prr_column": "Target_PRR_Chest_pain"
+      },
+      {
+        "display_name": "Condition aggravated",
+        "binary_column": "Target_Binary_Condition_aggravated",
+        "prr_column": "Target_PRR_Condition_aggravated"
+      },
+      {
+        "display_name": "Confusional state",
+        "binary_column": "Target_Binary_Confusional_state",
+        "prr_column": "Target_PRR_Confusional_state"
+      },
+      {
+        "display_name": "Constipation",
+        "binary_column": "Target_Binary_Constipation",
+        "prr_column": "Target_PRR_Constipation"
+      },
+      {
+        "display_name": "Cough",
+        "binary_column": "Target_Binary_Cough",
+        "prr_column": "Target_PRR_Cough"
+      },
+      {
+        "display_name": "Death",
+        "binary_column": "Target_Binary_Death",
+        "prr_column": "Target_PRR_Death"
+      },
+      {
+        "display_name": "Decreased appetite",
+        "binary_column": "Target_Binary_Decreased_appetite",
+        "prr_column": "Target_PRR_Decreased_appetite"
+      },
+      {
+        "display_name": "Dehydration",
+        "binary_column": "Target_Binary_Dehydration",
+        "prr_column": "Target_PRR_Dehydration"
+      },
+      {
+        "display_name": "Depression",
+        "binary_column": "Target_Binary_Depression",
+        "prr_column": "Target_PRR_Depression"
+      },
+      {
+        "display_name": "Diarrhoea",
+        "binary_column": "Target_Binary_Diarrhoea",
+        "prr_column": "Target_PRR_Diarrhoea"
+      },
+      {
+        "display_name": "Dizziness",
+        "binary_column": "Target_Binary_Dizziness",
+        "prr_column": "Target_PRR_Dizziness"
+      },
+      {
+        "display_name": "Drug ineffective",
+        "binary_column": "Target_Binary_Drug_ineffective",
+        "prr_column": "Target_PRR_Drug_ineffective"
+      },
+      {
+        "display_name": "Drug interaction",
+        "binary_column": "Target_Binary_Drug_interaction",
+        "prr_column": "Target_PRR_Drug_interaction"
+      },
+      {
+        "display_name": "Dyspnoea",
+        "binary_column": "Target_Binary_Dyspnoea",
+        "prr_column": "Target_PRR_Dyspnoea"
+      },
+      {
+        "display_name": "Fall",
+        "binary_column": "Target_Binary_Fall",
+        "prr_column": "Target_PRR_Fall"
+      },
+      {
+        "display_name": "Fatigue",
+        "binary_column": "Target_Binary_Fatigue",
+        "prr_column": "Target_PRR_Fatigue"
+      },
+      {
+        "display_name": "Gait disturbance",
+        "binary_column": "Target_Binary_Gait_disturbance",
+        "prr_column": "Target_PRR_Gait_disturbance"
+      },
+      {
+        "display_name": "General physical health deterioration",
+        "binary_column": "Target_Binary_General_physical_health_deterioration",
+        "prr_column": "Target_PRR_General_physical_health_deterioration"
+      },
+      {
+        "display_name": "Haemoglobin decreased",
+        "binary_column": "Target_Binary_Haemoglobin_decreased",
+        "prr_column": "Target_PRR_Haemoglobin_decreased"
+      },
+      {
+        "display_name": "Headache",
+        "binary_column": "Target_Binary_Headache",
+        "prr_column": "Target_PRR_Headache"
+      },
+      {
+        "display_name": "Hypertension",
+        "binary_column": "Target_Binary_Hypertension",
+        "prr_column": "Target_PRR_Hypertension"
+      },
+      {
+        "display_name": "Hypoaesthesia",
+        "binary_column": "Target_Binary_Hypoaesthesia",
+        "prr_column": "Target_PRR_Hypoaesthesia"
+      },
+      {
+        "display_name": "Hypotension",
+        "binary_column": "Target_Binary_Hypotension",
+        "prr_column": "Target_PRR_Hypotension"
+      },
+      {
+        "display_name": "Insomnia",
+        "binary_column": "Target_Binary_Insomnia",
+        "prr_column": "Target_PRR_Insomnia"
+      },
+      {
+        "display_name": "Loss of consciousness",
+        "binary_column": "Target_Binary_Loss_of_consciousness",
+        "prr_column": "Target_PRR_Loss_of_consciousness"
+      },
+      {
+        "display_name": "Malaise",
+        "binary_column": "Target_Binary_Malaise",
+        "prr_column": "Target_PRR_Malaise"
+      },
+      {
+        "display_name": "Myocardial infarction",
+        "binary_column": "Target_Binary_Myocardial_infarction",
+        "prr_column": "Target_PRR_Myocardial_infarction"
+      },
+      {
+        "display_name": "Nausea",
+        "binary_column": "Target_Binary_Nausea",
+        "prr_column": "Target_PRR_Nausea"
+      },
+      {
+        "display_name": "Oedema peripheral",
+        "binary_column": "Target_Binary_Oedema_peripheral",
+        "prr_column": "Target_PRR_Oedema_peripheral"
+      },
+      {
+        "display_name": "Pain",
+        "binary_column": "Target_Binary_Pain",
+        "prr_column": "Target_PRR_Pain"
+      },
+      {
+        "display_name": "Pain in extremity",
+        "binary_column": "Target_Binary_Pain_in_extremity",
+        "prr_column": "Target_PRR_Pain_in_extremity"
+      },
+      {
+        "display_name": "Pneumonia",
+        "binary_column": "Target_Binary_Pneumonia",
+        "prr_column": "Target_PRR_Pneumonia"
+      },
+      {
+        "display_name": "Pruritus",
+        "binary_column": "Target_Binary_Pruritus",
+        "prr_column": "Target_PRR_Pruritus"
+      },
+      {
+        "display_name": "Pyrexia",
+        "binary_column": "Target_Binary_Pyrexia",
+        "prr_column": "Target_PRR_Pyrexia"
+      },
+      {
+        "display_name": "Rash",
+        "binary_column": "Target_Binary_Rash",
+        "prr_column": "Target_PRR_Rash"
+      },
+      {
+        "display_name": "Renal failure",
+        "binary_column": "Target_Binary_Renal_failure",
+        "prr_column": "Target_PRR_Renal_failure"
+      },
+      {
+        "display_name": "Renal failure acute",
+        "binary_column": "Target_Binary_Renal_failure_acute",
+        "prr_column": "Target_PRR_Renal_failure_acute"
+      },
+      {
+        "display_name": "Somnolence",
+        "binary_column": "Target_Binary_Somnolence",
+        "prr_column": "Target_PRR_Somnolence"
+      },
+      {
+        "display_name": "Tremor",
+        "binary_column": "Target_Binary_Tremor",
+        "prr_column": "Target_PRR_Tremor"
+      },
+      {
+        "display_name": "Urinary tract infection",
+        "binary_column": "Target_Binary_Urinary_tract_infection",
+        "prr_column": "Target_PRR_Urinary_tract_infection"
+      },
+      {
+        "display_name": "Vomiting",
+        "binary_column": "Target_Binary_Vomiting",
+        "prr_column": "Target_PRR_Vomiting"
+      },
+      {
+        "display_name": "Weight decreased",
+        "binary_column": "Target_Binary_Weight_decreased",
+        "prr_column": "Target_PRR_Weight_decreased"
+      },
+      {
+        "display_name": "Weight increased",
+        "binary_column": "Target_Binary_Weight_increased",
+        "prr_column": "Target_PRR_Weight_increased"
+      }
+    ],
+    "any_adverse_event": true
+  },
+  "notes": [
+    "A drug pair is assembled from two drug_catalog rows: A-side fields keep the _A suffix and B-side fields the _B suffix.",
+    "Apply the same cleaning functions from preprocessing_eda.py, then the saved TF-IDF vectorizer and structured preprocessor.",
+    "Pair_ID is an identifier only and must never be a model input."
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "chosen_model": "LightGBM 600 trees x 63 leaves",
+  "features": "fingerprints",
+  "cv_macro_F1": 0.7645070813512687,
+  "validation_macro_F1": 0.7969395595652035
+}
