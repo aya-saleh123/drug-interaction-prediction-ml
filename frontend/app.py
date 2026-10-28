@@ -344,7 +344,15 @@ if "interaction_result" in st.session_state:
     severity = result.get("severity")
 
     if severity is not None:
-        st.info(f"Predicted Severity: **{severity}**")
+        sev_lower = str(severity).strip().lower()
+        if sev_lower == "major":
+            st.error(f"🔴 Predicted Severity: **{severity}** — High Risk Interaction")
+        elif sev_lower == "minor":
+            st.success(f"🟢 Predicted Severity: **{severity}** — Low Risk Interaction")
+        elif sev_lower == "moderate":
+            st.warning(f"🟠 Predicted Severity: **{severity}** — Moderate Risk Interaction")
+        else:
+            st.info(f"Predicted Severity: **{severity}**")
     else:
         st.warning("Severity information was not returned by the API.")
 
@@ -432,3 +440,204 @@ if "interaction_result" in st.session_state:
         "model predictions, not medical advice or verified clinical "
         "probabilities. Do not use them to make treatment decisions."
     )
+
+# --------------------------------------------------
+# Embedded Official n8n Chat Widget (@n8n/chat)
+# --------------------------------------------------
+import streamlit.components.v1 as components
+
+N8N_CHAT_WEBHOOK_URL = "https://motamer540.app.n8n.cloud/webhook/d0a17e2f-9886-4ecf-ac56-b3c5f5010218/chat"
+
+components.html(
+    f"""
+    <script>
+    (function() {{
+        try {{
+            const targetDoc = (window.parent && window.parent.document) ? window.parent.document : document;
+            const targetWin = (window.parent && window.parent.window) ? window.parent.window : window;
+
+            // Remove any old native popovers if present
+            const oldPopover = targetDoc.querySelector('div[data-testid="stPopover"]');
+            if (oldPopover) oldPopover.style.display = 'none';
+
+            // Check if already initialized to prevent duplicate widgets on rerun
+            if (targetDoc.getElementById('n8n-chat-initialized')) {{
+                return;
+            }}
+
+            // 1. Create target container in parent document body
+            let chatContainer = targetDoc.getElementById('n8n-chat');
+            if (!chatContainer) {{
+                chatContainer = targetDoc.createElement('div');
+                chatContainer.id = 'n8n-chat';
+                targetDoc.body.appendChild(chatContainer);
+            }}
+
+            // 2. Add n8n style.css
+            if (!targetDoc.getElementById('n8n-chat-style')) {{
+                const link = targetDoc.createElement('link');
+                link.id = 'n8n-chat-style';
+                link.rel = 'stylesheet';
+                link.href = 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css';
+                targetDoc.head.appendChild(link);
+            }}
+
+            // 3. Add Custom Design & Aesthetic Styles
+            if (!targetDoc.getElementById('n8n-custom-theme')) {{
+                const style = targetDoc.createElement('style');
+                style.id = 'n8n-custom-theme';
+                style.textContent = `
+                    :root {{
+                        --chat--color-primary: #2563eb;
+                        --chat--color-primary-shade-50: #1d4ed8;
+                        --chat--color-primary-shade-100: #1e40af;
+                        --chat--header--background: #1e293b;
+                        --chat--body--background: #0f172a;
+                        --chat--footer--background: #1e293b;
+                        --chat--message--bot--background: #1e293b;
+                        --chat--message--bot--color: #f8fafc;
+                        --chat--message--user--background: #2563eb;
+                        --chat--message--user--color: #ffffff;
+                        --chat--input--background: #0f172a;
+                        --chat--input--text-color: #f8fafc;
+                        --chat--window--border-radius: 20px;
+                        --chat--window--width: 400px;
+                        --chat--window--height: 540px;
+                        --chat--window--z-index: 99999999;
+                    }}
+
+                    #n8n-chat {{
+                        position: fixed !important;
+                        bottom: 24px !important;
+                        right: 24px !important;
+                        z-index: 99999999 !important;
+                    }}
+
+                    /* Exact Old Floating Button Style */
+                    #n8n-chat .chat-window-toggle {{
+                        width: 62px !important;
+                        height: 62px !important;
+                        border-radius: 50% !important;
+                        background-color: #2563eb !important;
+                        background-image: 
+                            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.1 21.2a1 1 0 0 0 1.2 1.2l4.2-1.238A9.957 9.957 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm-3 8a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm6 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm-6.2 5.5a4.5 4.5 0 0 0 6.4 0 .75.75 0 1 1 1.06 1.06 6 6 0 0 1-8.52 0 .75.75 0 1 1 1.06-1.06z'/%3E%3C/svg%3E"),
+                            linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%) !important;
+                        background-repeat: no-repeat, no-repeat !important;
+                        background-position: center, center !important;
+                        background-size: 32px 32px, 100% 100% !important;
+                        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5), 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+                        border: 2.5px solid rgba(255, 255, 255, 0.45) !important;
+                        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+                        position: relative !important;
+                        outline: none !important;
+                        display: flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                    }}
+
+                    #n8n-chat .chat-window-toggle:hover {{
+                        transform: scale(1.1) translateY(-4px) !important;
+                        box-shadow: 0 14px 35px rgba(37, 99, 235, 0.65), 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+                        background-image: 
+                            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.1 21.2a1 1 0 0 0 1.2 1.2l4.2-1.238A9.957 9.957 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm-3 8a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm6 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm-6.2 5.5a4.5 4.5 0 0 0 6.4 0 .75.75 0 1 1 1.06 1.06 6 6 0 0 1-8.52 0 .75.75 0 1 1 1.06-1.06z'/%3E%3C/svg%3E"),
+                            linear-gradient(135deg, #60a5fa 0%, #2563eb 50%, #1d4ed8 100%) !important;
+                    }}
+
+                    /* Hide n8n's default toggle SVG so our SVG robot face displays cleanly */
+                    #n8n-chat .chat-window-toggle svg,
+                    #n8n-chat .chat-window-toggle .chat-icon {{
+                        opacity: 0 !important;
+                        display: none !important;
+                    }}
+
+                    /* Green pulsing online badge on button */
+                    #n8n-chat .chat-window-toggle::after {{
+                        content: "" !important;
+                        position: absolute !important;
+                        top: 2px !important;
+                        right: 2px !important;
+                        width: 14px !important;
+                        height: 14px !important;
+                        background-color: #10b981 !important;
+                        border: 2.5px solid #ffffff !important;
+                        border-radius: 50% !important;
+                        box-shadow: 0 0 8px rgba(16, 185, 129, 0.7) !important;
+                        animation: afify-pulse 2s infinite !important;
+                        z-index: 99 !important;
+                        pointer-events: none !important;
+                    }}
+
+                    @keyframes afify-pulse {{
+                        0% {{ box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }}
+                        70% {{ box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }}
+                        100% {{ box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }}
+                    }}
+
+                    /* Window border, shadow and header */
+                    #n8n-chat .chat-window {{
+                        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+                        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6) !important;
+                    }}
+
+                    #n8n-chat .chat-header h1::before {{
+                        content: "🤖 ";
+                        margin-right: 4px;
+                    }}
+                `;
+                targetDoc.head.appendChild(style);
+            }}
+
+            // 4. Load UMD bundle and initialize createChat
+            function initChat() {{
+                if (targetWin.N8nChat && typeof targetWin.N8nChat.createChat === 'function') {{
+                    const flag = targetDoc.createElement('div');
+                    flag.id = 'n8n-chat-initialized';
+                    targetDoc.body.appendChild(flag);
+
+                    targetWin.N8nChat.createChat({{
+                        webhookUrl: '{N8N_CHAT_WEBHOOK_URL}',
+                        target: '#n8n-chat',
+                        mode: 'window',
+                        showWelcomeScreen: false,
+                        defaultLanguage: 'en',
+                        initialMessages: [
+                            'Welcome to our Website👋\\n\\nMy name is AFIFY\\n\\nHow can I assist you today?'
+                        ],
+                        i18n: {{
+                            en: {{
+                                title: 'AFIFY',
+                                subtitle: '',
+                                footer: '',
+                                getStarted: 'New Conversation',
+                                inputPlaceholder: 'Type your question here...',
+                            }}
+                        }}
+                    }});
+                }}
+            }}
+
+            if (targetWin.N8nChat) {{
+                initChat();
+            }} else {{
+                const script = targetDoc.createElement('script');
+                script.id = 'n8n-chat-bundle';
+                script.src = 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.umd.js';
+                script.onload = initChat;
+                targetDoc.head.appendChild(script);
+            }}
+        }} catch (err) {{
+            console.error('Error embedding n8n chat:', err);
+        }}
+    }})();
+    </script>
+    """,
+    height=0,
+    width=0,
+)
+
+
+
+
+
+
+
