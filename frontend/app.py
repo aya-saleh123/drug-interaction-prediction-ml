@@ -601,11 +601,11 @@ components.html(
                         showWelcomeScreen: false,
                         defaultLanguage: 'en',
                         initialMessages: [
-                            'Welcome to our Website👋\\n\\nMy name is AFIFY\\n\\nHow can I assist you today?'
+                            'Welcome to our Website👋\\n\\nMy name is HAKIM\\n\\nHow can I assist you today?'
                         ],
                         i18n: {{
                             en: {{
-                                title: 'AFIFY',
+                                title: 'HAKIM',
                                 subtitle: '',
                                 footer: '',
                                 getStarted: 'New Conversation',
